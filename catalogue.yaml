@@ -93,4 +93,4 @@
 
   - name: load products into mongodb
     ansible.builtin.shell: mongosh --host mongodb.dawgs.online </app/db/master-data.js
-      when: catalogue.output.stdout < 0
+    when: catalogue.output.stdout < 0
