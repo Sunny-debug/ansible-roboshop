@@ -92,7 +92,7 @@
   #     msg: "{{ catalogue_output }}"  
 
   - name: convert string var to int var
-    set_fact:
+    ansible.builtin.set_fact:
     intVar: "{{ catalogue_output.stdout }}"
 
   - name: load products into mongodb
