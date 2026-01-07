@@ -67,8 +67,8 @@
   #     state: started
   #     name: user
 
-  - name: start and enable catalogue
+  - name: start and enable user
     ansible.builtin.service:
-      name: catalogue
+      name: user
       enabled: yes
       state: started
