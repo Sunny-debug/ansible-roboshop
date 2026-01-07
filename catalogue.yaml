@@ -82,3 +82,7 @@
   - name: connnect to mongodb catalogue
     ansible.builtin.command: mongosh mongodb.dawgs.online --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
     register: catalogue_output
+
+  - name: print the output
+    ansible.builtin.debug:
+      msg: "{{ catalogue_output }}"  
