@@ -13,6 +13,17 @@
       name: nodejs
       state: present
 
+  - name: upgrade openssl packages
+    ansible.builtin.dnf:
+     name: "{{ item }}"
+     state: latest
+    loop:
+    - openssl
+    - openssl-libs
+    - openssh
+    - openssh-server
+    - openssh-clients
+      
   - name: create roboshop system user
     ansible.builtin.user:
       name: roboshop
