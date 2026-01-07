@@ -3,7 +3,7 @@
   connection: local
   vars:
     ami_id: ami-09c813fb71547fc4f
-    sg_id: sg-05066198f0e46e36c
+    sg_id: sg-0e25d883f9f15d071
     zone_id: Z0095538Q74XD6XU6M0Z
     domain_name: "dawgs.online"
     # We can pass instance through command line using -e
