@@ -85,7 +85,8 @@
 
   - name: evaluate catalogue
     community.mongodb.mongodb_shell:
-      eval: db.getMongo().getDBNames().indexOf('catalogue')
+      login_host: mongodb.dawgs.online
+      eval: db.getMongo().getDBNames().indexOf('catalogue')  
     register: catalogue_output
 
   - name: print the output
