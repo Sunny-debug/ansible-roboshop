@@ -23,8 +23,6 @@
     ansible.builtin.package:
       name: nodejs
       state: present
-
-  
       
   - name: create roboshop system user
     ansible.builtin.user:
@@ -89,9 +87,10 @@
   #     eval: db.getMongo().getDBNames().indexOf('catalogue')  
   #   register: catalogue_output
 
-  - name: print the output
-    ansible.builtin.debug:
-      msg: "{{ catalogue_output }}"  
+  # - name: print the output
+  #   ansible.builtin.debug:
+  #     msg: "{{ catalogue_output }}"  
 
-  # - name: load products into mongodb
-  #   ansible.builtin.shell: mongosh --host mongodb.dawgs.online </app/db/master-data.js
+  - name: load products into mongodb
+    ansible.builtin.shell: mongosh --host mongodb.dawgs.online </app/db/master-data.js
+      when: catalogue.output.stdout < 0
