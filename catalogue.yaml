@@ -8,11 +8,6 @@
   - name: enable nodejs 20
     ansible.builtin.command: dnf module enable nodejs:20 -y
 
-  - name: install nodejs
-    ansible.builtin.package:
-      name: nodejs
-      state: present
-
   - name: upgrade openssl packages
     ansible.builtin.dnf:
      name: "{{ item }}"
@@ -23,6 +18,13 @@
     - openssh
     - openssh-server
     - openssh-clients
+
+  - name: install nodejs
+    ansible.builtin.package:
+      name: nodejs
+      state: present
+
+  
       
   - name: create roboshop system user
     ansible.builtin.user:
