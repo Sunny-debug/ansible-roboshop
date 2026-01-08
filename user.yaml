@@ -63,7 +63,7 @@
       dest: /etc/systemd/system/user.service
 
   - name: reload daemon
-    ansible.builtin.command: daemon-reload
+    ansible.builtin.command: systemctl daemon-reload
 
   - name: start and enable user
     ansible.builtin.service:
