@@ -81,6 +81,18 @@
     ansible.builtin.command: mongosh mongodb.dawgs.online --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
     register: catalogue_output
 
+  - name: MongoDB connectivity check
+    ansible.builtin.command: >
+      mongosh "mongodb://mongodb.dawgs.online:27017/?serverSelectionTimeoutMS=10000"
+      --quiet
+      --eval "db.runCommand({ping:1}).ok"
+    register: mongo_ping
+    retries: 6
+    delay: 5
+    until: mongo_ping.rc == 0 and mongo_ping.stdout.strip() == "1"  
+ 
+ 
+ 
   # - name: evaluate catalogue
   #   community.mongodb.mongodb_shell:
   #     login_host: mongodb.dawgs.online
