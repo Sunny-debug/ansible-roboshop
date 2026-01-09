@@ -35,7 +35,7 @@
       remote_src: yes      
 
   - name: delete default nginx conf
-    ansible.builtin.files:
+    ansible.builtin.file:
       state: absent
       path: /etc/nginx/nginx.conf
 
