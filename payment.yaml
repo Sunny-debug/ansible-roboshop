@@ -3,9 +3,9 @@
   become: yes
   tasks:
     - name: install python package
-    ansible.builtin.dnf:
-      name:
-      state: present
+      ansible.builtin.dnf:
+        name:
+        state: present
       loop: "{{ item }}"
       - python3
       - gcc
