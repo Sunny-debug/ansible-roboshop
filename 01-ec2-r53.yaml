@@ -3,7 +3,7 @@
   connection: local
   vars:
     ami_id: ami-09c813fb71547fc4f
-    sg_id: sg-051c179531ea3213c
+    sg_id: sg-01771c7148909044d
     zone_id: Z0095538Q74XD6XU6M0Z
     domain_name: "dawgs.online"
     # We can pass instance through command line using -e
@@ -39,26 +39,26 @@
   #     msg: "{{ item.instances[0].private_ip_address }}"
   #   loop: "{{ ec2_output.results }}"
 
-  - name: create route53 module
-    amazon.aws.route53:
-      state: present
-      zone: "{{ domain_name }}"  
-      record: "{{ item.item }}.{{ domain_name }}" # Domain name - mongodb.dawgs.online
-      type: A
-      ttl: 1
-      value: "{{ item.instances[0].private_ip_address }}"
-      overwrite: true
-    loop: "{{ ec2_output.results }}"  
+- name: create route53 records for private services (not frontend)
+  amazon.aws.route53:
+    state: present
+    zone: "{{ domain_name }}"
+    record: "{{ item.item }}.{{ domain_name }}"
+    type: A
+    ttl: 60
+    value: "{{ item.instances[0].private_ip_address }}"
+    overwrite: true
+  when: item.item != "frontend"
+  loop: "{{ ec2_output.results }}"
 
-  # we are creating one record with public ip only for frontend
-  # - name: create route53 record for frontend
-  #   amazon.aws.route53:
-  #     state: present
-  #     zone: "{{ domain_name }}"  
-  #     record: "{{ item.item }}.{{ domain_name }}" # Domain name - mongodb.dawgs.online
-  #     type: A
-  #     ttl: 1
-  #     value: "{{ item.instances[0].public_ip_address }}"
-  #     overwrite: true
-  #   when item.item == "frontend"  
-  #   loop: "{{ ec2_output.results }}"     
+- name: create route53 record for frontend (public)
+  amazon.aws.route53:
+    state: present
+    zone: "{{ domain_name }}"
+    record: "frontend.{{ domain_name }}"
+    type: A
+    ttl: 60
+    value: "{{ item.instances[0].public_ip_address }}"
+    overwrite: true
+  when: item.item == "frontend"
+  loop: "{{ ec2_output.results }}"    
