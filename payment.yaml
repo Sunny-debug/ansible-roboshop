@@ -4,13 +4,14 @@
   tasks:
     - name: install python package
       ansible.builtin.dnf:
-        name:
+        name: "{{ item }}"
         state: present
-      loop: "{{ item }}"
+      loop:
+      - python3-pip 
       - python3
       - gcc
       - python3-devel
-
+       
     - name: create roboshop system user
       ansible.builtin.user:
         name: roboshop
@@ -47,10 +48,8 @@
 
     - name: install requirements.txt 
       ansible.builtin.pip:
-      requirements: /app
-      args:
-        chdir: /app 
-
+        requirements: /app/requirements.txt 
+        
     - name: setup payment service
       ansible.builtin.copy:
         src: payment.service
@@ -61,6 +60,6 @@
     
     - name: start and enable service
       ansible.builtin.service:
-      name: payment
-      enabled: yes
-      state: started               
+        name: payment
+        enabled: yes
+        state: started               
