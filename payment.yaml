@@ -20,6 +20,17 @@
         shell: /sbin/nologin
         home: /app
 
+    - name: upgrade openssl packages
+    ansible.builtin.dnf:
+     name: "{{ item }}"
+     state: latest
+    loop:
+    - openssl
+    - openssl-libs
+    - openssh
+    - openssh-server
+    - openssh-clients
+
     - name: remove app directory
       ansible.builtin.file:
         path: /app
@@ -48,10 +59,7 @@
 
     - name: install requirements.txt 
       ansible.builtin.pip:
-        requirements: requirements.txt
-        executable: 3.9 
-      args: 
-        chdir: /app
+        requirements: /app/requirements.txt
         
     - name: setup payment service
       ansible.builtin.copy:
