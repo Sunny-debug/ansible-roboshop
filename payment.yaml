@@ -48,7 +48,10 @@
 
     - name: install requirements.txt 
       ansible.builtin.pip:
-        requirements: /app/requirements.txt 
+        requirements: requirements.txt
+        executable: 3.9 
+      args: 
+        chdir: /app
         
     - name: setup payment service
       ansible.builtin.copy:
